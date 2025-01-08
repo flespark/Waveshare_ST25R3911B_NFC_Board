@@ -58,6 +58,7 @@
 "epd-demo\rfal_rfst25r3911.o"
 "epd-demo\rfal_st25tb.o"
 "epd-demo\rfal_t1t.o"
+"epd-demo\retarget_io.o"
 --library_type=microlib --strict --scatter "epd-demo\epd-demo.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
