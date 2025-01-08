@@ -1,0 +1,7 @@
+si swd
+speed 4000
+device STM32F103RC
+r0
+sleep 10
+r1
+q

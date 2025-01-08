@@ -1,0 +1,14 @@
+CompileFlags:
+    CompilationDatabase: ./build/Debug
+Diagnostics:
+    Suppress: pp_file_not_found
+    ClangTidy:
+        Add: [
+            clang-diagnostic-*,
+            bugprone-*,
+            modernize-*,
+            clang-analyzer-core.uninitialized.*
+        ]
+        Remove: [
+            bugprone-reserved-identifier,
+        ]

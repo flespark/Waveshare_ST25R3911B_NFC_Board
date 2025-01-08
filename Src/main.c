@@ -70,16 +70,17 @@ void SystemClock_Config(void);
 	extern char filename[20][20];
 	extern uint8_t file_num;
 	
+#define MONTH_PER_YEAR 12
+const char szEnglishMonth[MONTH_PER_YEAR][4]={ "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+
 int GetCompileDateTime(void)
 {       
-       const int  MONTH_PER_YEAR=12;
-       const char szEnglishMonth[MONTH_PER_YEAR][4]={ "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
        char szTmpDate[40]={0};
        char szTmpTime[20]={0};
        char szMonth[4]={0};
        int iYear,iMonth,iDay,iHour,iMin,iSec;//,,
 
-       //获取编译日期、时间
+       //???????????????
        sprintf(szTmpDate,"%s",__DATE__); //"Sep 18 2010"
        sprintf(szTmpTime,"%s",__TIME__);   //"10:59:19"
        
@@ -105,7 +106,6 @@ int GetCompileDateTime(void)
        return iMonth;
 }
 /* USER CODE END 0 */
-
 
 /**
   * @brief  The application entry point.
@@ -193,7 +193,7 @@ int main(void)
 		/* OLED Display*/
 			Browser_display();
     /* USER CODE END WHILE */
-	
+
     /* USER CODE BEGIN 3 */
 
     }
@@ -209,7 +209,7 @@ void SystemClock_Config(void)
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /** Initializes the CPU, AHB and APB busses clocks 
+  /** Initializes the CPU, AHB and APB busses clocks
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
@@ -222,7 +222,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  /** Initializes the CPU, AHB and APB busses clocks 
+  /** Initializes the CPU, AHB and APB busses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
@@ -263,7 +263,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
     /* User can add his own implementation to report the file name and line number,
        tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

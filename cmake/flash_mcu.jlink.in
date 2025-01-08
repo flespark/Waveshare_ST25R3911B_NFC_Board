@@ -1,0 +1,7 @@
+SelectInterface SWD
+Speed 4000
+Device STM32F103RC
+LoadFile @TARGET_BIN@ 0x8000000
+Reset
+Go
+Exit

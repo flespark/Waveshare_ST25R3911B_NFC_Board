@@ -1,0 +1,57 @@
+// Configure debug launch settings
+{
+    "version": "0.2.0",
+    "projectName": "hc32l196-demo",
+    "configurations": [
+        {
+            "name": "jlink debug",
+            "cwd": "${workspaceFolder}",
+            "executable": "C:/Users/08607/Desktop/Source/ST25R3911B/epd-demo/build/Debug/epd-demo.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "serverpath": "C:/Program Files/SEGGER/JLink/JLinkGDBServerCL.exe",
+            "device": "STM32F103RC",
+            "interface": "swd",
+            "serialNumber": "99999999",
+            "svdPath": "${workspaceFolder}/device/STM32F103.svd",
+            /* Adapt to your gcc toolchain path */
+            "armToolchainPath": "C:/Users/08607/scoop/apps/gcc-arm-none-eabi/current/bin",
+            "runToEntryPoint": "main",
+            "overrideResetCommands": ["monitor reset 0"],
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 1
+            },
+            "preLaunchCommands": [
+                "show charset",
+                "set auto-load safe-path /",
+                "set print pretty",
+            ]
+        },
+        {
+            "name": "jlink attach",
+            "cwd": "${workspaceFolder}",
+            "executable": "C:/Users/08607/Desktop/Source/ST25R3911B/epd-demo/build/Debug/epd-demo.elf",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "serverpath": "C:/Program Files/SEGGER/JLink/JLinkGDBServerCL.exe",
+            "device": "STM32F103RC",
+            "interface": "swd",
+            "serialNumber": "99999999",
+            "svdPath": "${workspaceFolder}/device/STM32F103.svd",
+            /* Adapt to your gcc toolchain path */
+            "armToolchainPath": "C:/Users/08607/scoop/apps/gcc-arm-none-eabi/current/bin",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 1
+            },
+            "postAttachCommands": [
+                "show charset",
+                "set auto-load safe-path /",
+                "set print pretty",
+            ]
+        }
+    ]
+}

@@ -52,6 +52,7 @@
  ******************************************************************************
  */
 #include "demo.h"
+#include "logger.h"
 #include "utils.h"
 #include "rfal_rf.h"
 #include "rfal_nfca.h"

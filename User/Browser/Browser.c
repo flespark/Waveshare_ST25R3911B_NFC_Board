@@ -1,3 +1,4 @@
+#include "logger.h"
 #include "Browser.h"
 
 DIR dir;
@@ -84,26 +85,26 @@ unsigned char	Browser_save_fileame(unsigned char* path)
 }
 char browser_cursor_old = 0;
 const char Model_selection[20] = {6,0,4,1,2,3,7,255,255,255,255,255};
-//²»ÏëÏÔÊ¾µÄÖ±½Ó¸Ä255
+//ä¸æƒ³æ˜¾ç¤ºçš„ç›´æ¥æ”¹255
 /***************************************
-//Êı×Ö±êÊ¶µÄº­Òå£¬ÏÂÃæ¶ÔÓ¦Ä«Ë®ÆÁ³ÌĞòµÄÇø·Ö£¬ºÍµ×°åµÄÄ«Ë®ÆÁÇø·Ö²»Ò»ÖÂ
-//ĞŞ¸ÄÉÏÃæÊı×éµÄË³Ğò£¬¾Í¿ÉÒÔĞŞ¸ÄÑ¡ÔñÀ¸µÄÅÅÁĞË³Ğò
-//×¢ÒâÃ¿¶à¼ÓÒ»ÖÖÆÁÄ»£¬ÏÂÃæ±äÁ¿ePaper_QuantityĞèÒª¼Ó1
-//¶ÔÓ¦µÄ×Ö·û´®Êı×éÒ²ĞèÒª¼Ó¶ÔÓ¦µÄ×Ö·û´®
-//×Ö·û´®Îª¶şÎ¬Êı×é£¬²»¿ÉÒÔÊ¹ÓÃ±äÁ¿À´±£´æ¶şÎ¬Êı×é£¬ÄÚ´æ²»×ã£¬ÔÚÈÎÒâµØ·½¿ª±äÁ¿Êı×é×¢ÒâÄÚ´æ´óĞ¡
+//æ•°å­—æ ‡è¯†çš„æ¶µä¹‰ï¼Œä¸‹é¢å¯¹åº”å¢¨æ°´å±ç¨‹åºçš„åŒºåˆ†ï¼Œå’Œåº•æ¿çš„å¢¨æ°´å±åŒºåˆ†ä¸ä¸€è‡´
+//ä¿®æ”¹ä¸Šé¢æ•°ç»„çš„é¡ºåºï¼Œå°±å¯ä»¥ä¿®æ”¹é€‰æ‹©æ çš„æ’åˆ—é¡ºåº
+//æ³¨æ„æ¯å¤šåŠ ä¸€ç§å±å¹•ï¼Œä¸‹é¢å˜é‡ePaper_Quantityéœ€è¦åŠ 1
+//å¯¹åº”çš„å­—ç¬¦ä¸²æ•°ç»„ä¹Ÿéœ€è¦åŠ å¯¹åº”çš„å­—ç¬¦ä¸²
+//å­—ç¬¦ä¸²ä¸ºäºŒç»´æ•°ç»„ï¼Œä¸å¯ä»¥ä½¿ç”¨å˜é‡æ¥ä¿å­˜äºŒç»´æ•°ç»„ï¼Œå†…å­˜ä¸è¶³ï¼Œåœ¨ä»»æ„åœ°æ–¹å¼€å˜é‡æ•°ç»„æ³¨æ„å†…å­˜å¤§å°
 0: 2.13
 1: 2.9
 2: 4.2
 3: 7.5
 4: 2.7
 5: 2.13B
-6£º1.54B
-7£º7.5HD
-´Ë±í¶ÔÓ¦ÏÂÃæ×Ö·û´®ÒÔ¼°Çı¶¯Ñ¡Ôñ£¬Èç¹ûĞèÒªĞŞ¸ÄÇë½«ÏÂÃæÇı¶¯Ò»Æğ¸Ä
+6ï¼š1.54B
+7ï¼š7.5HD
+æ­¤è¡¨å¯¹åº”ä¸‹é¢å­—ç¬¦ä¸²ä»¥åŠé©±åŠ¨é€‰æ‹©ï¼Œå¦‚æœéœ€è¦ä¿®æ”¹è¯·å°†ä¸‹é¢é©±åŠ¨ä¸€èµ·æ”¹
 ***************************************/
-//Ã¿¶àÒ»¸öÆÁÄ»¼Ó1£¬×¢ÒâÆÁÄ»×ÜÊı = ePaper_Quantity + 1 
-const int  ePaper_Quantity = 7;
-const char Model_string[ePaper_Quantity+3][21] = {
+//æ¯å¤šä¸€ä¸ªå±å¹•åŠ 1ï¼Œæ³¨æ„å±å¹•æ€»æ•° = ePaper_Quantity + 1 
+#define EPAPER_QUANTITY 7
+const char Model_string[EPAPER_QUANTITY+3][21] = {
 	{"2.13 inch e-paper"},//0
 	{"2.9 inch e-paper"},//1
 	{"4.2 inch e-paper"},//2
@@ -112,7 +113,7 @@ const char Model_string[ePaper_Quantity+3][21] = {
 	{"2.13 inch e-paper B"},//5
 	{"1.54 inch e-paper B"},//6
 	{"7.5 inch e-paper HD"},//7
-	{".........."},//¶àÁôÁ½¸ö·½±ãµ÷ÊÔ£¬·ÀÖ¹Êı¾İ³ö½ç£¬
+	{".........."},//å¤šç•™ä¸¤ä¸ªæ–¹ä¾¿è°ƒè¯•ï¼Œé˜²æ­¢æ•°æ®å‡ºç•Œï¼Œ
 	{".........."},//
 };
 int Sort = 1;
@@ -196,31 +197,31 @@ void Browser_display(void)
 	{
 		/********************Display E-paper Size Options*****************/
 		Browser_paper_clean_full();
-		for(int k=0;k<ePaper_Quantity;k++){
+		for(int k=0;k<EPAPER_QUANTITY;k++){
 			if(browser_cursor%3 ==0 ){
 				ssd1306_display_string(10, 13,Model_string[Model_selection[browser_cursor]], 12, 0);//
-				//²é±í·½Ê½»ñÈ¡×Ö·û´®
-			}else  if(Model_selection[browser_cursor-browser_cursor%3] < ePaper_Quantity) {
+				//æŸ¥è¡¨æ–¹å¼è·å–å­—ç¬¦ä¸²
+			}else  if(Model_selection[browser_cursor-browser_cursor%3] < EPAPER_QUANTITY) {
 				ssd1306_display_string(10, 13,Model_string[Model_selection[browser_cursor-browser_cursor%3]], 12, 1);
 			}
 			
 			if(browser_cursor%3 ==1){
 				ssd1306_display_string(10, 25,Model_string[Model_selection[browser_cursor]], 12, 0);
-			}else if(Model_selection[browser_cursor-browser_cursor%3+1] < ePaper_Quantity) {
-				//ÔÚ×îºóÒ»Ò³²»ÏÔÊ¾¶àÓàµÄ×Ö·û´®
+			}else if(Model_selection[browser_cursor-browser_cursor%3+1] < EPAPER_QUANTITY) {
+				//åœ¨æœ€åä¸€é¡µä¸æ˜¾ç¤ºå¤šä½™çš„å­—ç¬¦ä¸²
 				ssd1306_display_string(10, 25,Model_string[Model_selection[browser_cursor-browser_cursor%3+1]], 12, 1);
-				//ÔÚ²»Í¬µÄÌõ¼şÏÂ»ñÈ¡²»Í¬µÄ×Ö·û´®£¬
+				//åœ¨ä¸åŒçš„æ¡ä»¶ä¸‹è·å–ä¸åŒçš„å­—ç¬¦ä¸²ï¼Œ
 				/*  
-				Î»ÖÃ//0    1   2
-				    +0   +1  +2   ¶ÔÓ¦Êı×Ö%3 + 0 
-						+1   +0  -1   ¶ÔÓ¦Êı×Ö%3 + 1
-				    +2   +1  +0   ¶ÔÓ¦Êı×Ö%3 + 2 
+				ä½ç½®//0    1   2
+				    +0   +1  +2   å¯¹åº”æ•°å­—%3 + 0 
+						+1   +0  -1   å¯¹åº”æ•°å­—%3 + 1
+				    +2   +1  +0   å¯¹åº”æ•°å­—%3 + 2 
 				*/
 			}
 			
 			if(browser_cursor%3 == 2)
 				ssd1306_display_string(10, 37,Model_string[Model_selection[browser_cursor]], 12, 0);
-			else if(Model_selection[browser_cursor-browser_cursor%3+2] < ePaper_Quantity) 
+			else if(Model_selection[browser_cursor-browser_cursor%3+2] < EPAPER_QUANTITY) 
 				ssd1306_display_string(10, 37,Model_string[Model_selection[browser_cursor-browser_cursor%3+2]], 12, 1);
 		}
 
@@ -245,13 +246,13 @@ void Browser_display(void)
 					browser_cursor--;
 					if(browser_cursor<0)
 					{		
-						browser_cursor=ePaper_Quantity-1;
+						browser_cursor=EPAPER_QUANTITY-1;
 					}
 				}
 				else if(key_flag==2)					//Down
 				{	
 					browser_cursor++;
-					if(browser_cursor>=ePaper_Quantity)
+					if(browser_cursor>=EPAPER_QUANTITY)
 					{
 						browser_cursor=0;
 					}
@@ -277,8 +278,8 @@ void Browser_display(void)
 	else if(Interface_flag==2)
 	{	
 		/********************Display file*****************/	
-		//ÅÅĞò
-		//×¢ÒâÔÚË¢ĞÂ½áÊøºóÔÚÖØĞÂÑ¡ÔñÍ¼Æ¬ºó»á±£´æµ±Ç°Í¼Æ¬ÊÇµÚ¼¸¸ö£¬ÖØĞÂÑ¡ÔñÄ«Ë®ÆÁÖ®ºó»á×Ô¶¯Ìøµ½µÚ¼¸¸öÍ¼Æ¬
+		//æ’åº
+		//æ³¨æ„åœ¨åˆ·æ–°ç»“æŸååœ¨é‡æ–°é€‰æ‹©å›¾ç‰‡åä¼šä¿å­˜å½“å‰å›¾ç‰‡æ˜¯ç¬¬å‡ ä¸ªï¼Œé‡æ–°é€‰æ‹©å¢¨æ°´å±ä¹‹åä¼šè‡ªåŠ¨è·³åˆ°ç¬¬å‡ ä¸ªå›¾ç‰‡
 		//
 		char count=0;
 		char TIMP[50];
@@ -286,22 +287,22 @@ void Browser_display(void)
 			for(char i = 0;i<50;i++){
 				if(filename[i][0] == Model_string[size_flag][0]){//2.13
 					if(filename[i][2] == Model_string[size_flag][2] && filename[i][3] == Model_string[size_flag][3]){//2.13
-						//³ÉÁ¢
+						//æˆç«‹
 						strcpy(TIMP,filename[count]);
 						strcpy(filename[count],filename[i]);
 						strcpy(filename[i],TIMP);
 						count++;
 					}else if(filename[i][3] == Model_string[size_flag][2]){//2in1
-						if(Model_string[size_flag][3] <= '9' && Model_string[size_flag][3] >= '0'){//Èç¹ûÊÇÊı×Ö
+						if(Model_string[size_flag][3] <= '9' && Model_string[size_flag][3] >= '0'){//å¦‚æœæ˜¯æ•°å­—
 							if(filename[i][4] == Model_string[size_flag][3] ){
-								//³ÉÁ¢
+								//æˆç«‹
 								strcpy(TIMP,filename[count]);
 								strcpy(filename[count],filename[i]);
 								strcpy(filename[i],TIMP);
 								count++;
 							}
-						}else{//Èç¹û²»ÊÇÊı×Ö
-							//³ÉÁ¢
+						}else{//å¦‚æœä¸æ˜¯æ•°å­—
+							//æˆç«‹
 							strcpy(TIMP,filename[count]);
 							strcpy(filename[count],filename[i]);
 							strcpy(filename[i],TIMP);
@@ -472,7 +473,7 @@ void Browser_display(void)
 		}
 	}
 }
-const int length[ePaper_Quantity+1]= {16,16,100,120,121,106,100,120};
+const int length[EPAPER_QUANTITY+1]= {16,16,100,120,121,106,100,120};
 /***********************************************
 							Read_RAM
 ***********************************************/
@@ -487,9 +488,9 @@ void Read_RAM(uint32_t i,uint8_t *l)
 		3: 7.5    120
 		4: 2.7    121
 		5: 2.13B  106
-		6£º1.54B  100 
-		7£º7.5HD  120
-	Ò»´Î·¢ËÍÊı¾İ²»µÃ´óÓÚ128-3 
+		6ï¼š1.54B  100 
+		7ï¼š7.5HD  120
+	ä¸€æ¬¡å‘é€æ•°æ®ä¸å¾—å¤§äº128-3 
 	*******************************/
 	for(j=0;j<length[size_flag];j++)
 	{
@@ -501,7 +502,7 @@ void Read_RedRAM(uint32_t i,uint8_t *l)
 	uint8_t j;
 	for(j=0;j<length[size_flag];j++)
 	{
-		if(size_flag  == 6){//1.54BĞèÒª·­×ªºìÉ«Í¼Æ¬Êı¾İ£¬ÆäËûÆÁÄ»ÔÚµ×²ã×öÁË´¦Àí²»ĞèÒª·­×ª
+		if(size_flag  == 6){//1.54Béœ€è¦ç¿»è½¬çº¢è‰²å›¾ç‰‡æ•°æ®ï¼Œå…¶ä»–å±å¹•åœ¨åº•å±‚åšäº†å¤„ç†ä¸éœ€è¦ç¿»è½¬
 			l[3+j]=~SPIRAM_RD_Byte(i*length[size_flag]+j+60000);
 		}else {
 			l[3+j]=SPIRAM_RD_Byte(i*length[size_flag]+j+60000);
@@ -526,9 +527,9 @@ void Show_Progress(int progress)
 		ssd1306_refresh_gram();
 }
 /*******************************************************************
-						1.54B Ô¿³×¿Û³ÌĞò
-						1.54B ²»¹²ÓÃµ×°å£¬¹Ì¼ş¹Ì¶¨
-						ÌØÊâ´¦Àí
+						1.54B é’¥åŒ™æ‰£ç¨‹åº
+						1.54B ä¸å…±ç”¨åº•æ¿ï¼Œå›ºä»¶å›ºå®š
+						ç‰¹æ®Šå¤„ç†
 *******************************************************************/
 char Start_Dawring_1in54B(void)
 {
@@ -542,12 +543,12 @@ char Start_Dawring_1in54B(void)
 	if(size_flag == 6){
 		step_5[2] = 100;
 	}
-	KEY_BACK_Value = 0;//ÖĞ¶ÏÏìÓ¦
+	KEY_BACK_Value = 0;//ä¸­æ–­å“åº”
 	while(1){
 		if(step == 5){
 			
 			Browser_paper_clean_full(); 
-			if(size_flag==6){						//1.54inch B Ô¿³×¿Û
+			if(size_flag==6){						//1.54inch B é’¥åŒ™æ‰£
 					for(i=0;i<50;i++){	
 						rx[0]=1;rx[1]=1;
 						Read_RAM(i,step_5);
@@ -557,7 +558,7 @@ char Start_Dawring_1in54B(void)
 						Show_Progress(progress);
 						GREEN_LED_Turn();
 						if(KEY_BACK_Value == 1){
-									step = 15;//´«ÊäÊı¾İ±»´ò¶Ï
+									step = 15;//ä¼ è¾“æ•°æ®è¢«æ‰“æ–­
 									break;
 						}
 					}
@@ -591,17 +592,17 @@ char Start_Dawring_1in54B(void)
 			}
 		}else if(step == 7){
 			Browser_paper_clean_full(); 
-			if(size_flag==6){							//1.54inch B Ô¿³×¿Û
+			if(size_flag==6){							//1.54inch B é’¥åŒ™æ‰£
 					for(i=0;i<50;i++){	
 						rx[0]=1;rx[1]=1;
-						Read_RedRAM(i,step_5);//·¢ËÍºìÉ«Í¼Æ¬Êı¾İ
+						Read_RedRAM(i,step_5);//å‘é€çº¢è‰²å›¾ç‰‡æ•°æ®
 						rfalTransceiveBlockingTxRx(step_5,103,rx,20,actrxlen,RFAL_TXRX_FLAGS_DEFAULT,2157+2048);  // cd 05
 						progress=i*100/100+50;
 						printf("Proress: %d %%\r\n", progress);
 						Show_Progress(progress);
 						GREEN_LED_Turn();
 						if(KEY_BACK_Value == 1){
-									step = 15;//´«ÊäÊı¾İ±»´ò¶Ï
+									step = 15;//ä¼ è¾“æ•°æ®è¢«æ‰“æ–­
 									break;
 						}
 					}
@@ -614,7 +615,7 @@ char Start_Dawring_1in54B(void)
 				step = 15;
 			}
 		}else if(step == 8){
-			//·¢ËÍ¸üĞÂÖ¸Áî
+			//å‘é€æ›´æ–°æŒ‡ä»¤
 			rfalTransceiveBlockingTxRx(step_6,2,rx,20,actrxlen,RFAL_TXRX_FLAGS_DEFAULT,2157+2048);										//cd 06																		
 			GREEN_LED_Turn();
 			if(rx[0]==0&&rx[1]==0){	
@@ -639,7 +640,7 @@ char Start_Dawring_1in54B(void)
 		else if(step == 14){
 			return 1;
 		}
-		else if(step == 15){//±»´ò¶Ì
+		else if(step == 15){//è¢«æ‰“çŸ­
 			printf("step 15\r\n");
 			return 2;
 		}
@@ -655,7 +656,7 @@ uint8_t Start_Dawring(void)
 	uint8_t						step=0,progress=0;
 	uint8_t						step0[2]={0xcd,0x0d};				
   uint8_t						step1[3]={0xcd,0x00,10};				//select e-paper type and reset e-paper  						4:2.13inch e-Paper   7:2.9inch e-Paper  10:4.2inch e-Paper  14:7.5inch e-Paper
-	uint8_t						step2[2]={0xcd,0x01};						//e-paper normal mode  type£º
+	uint8_t						step2[2]={0xcd,0x01};						//e-paper normal mode  typeï¼š
 	uint8_t						step3[2]={0xcd,0x02};						//e-paper config1
 	uint8_t						step4[2]={0xcd,0x03};						//e-paper power on	
 	uint8_t						step5[2]={0xcd,0x05};						//e-paper config2
@@ -740,10 +741,10 @@ uint8_t Start_Dawring(void)
 				}
 				else if(step==1)
 				{		Browser_paper_clean_full(); 
-						//step1[2] ±£´æÄ«Ë®ÆÁĞÍºÅ
-						//step8[2] ±£´æÒ»´Î·¢ËÍµÄ×Ö½ÚÊı
-						//step13[2]  ±£´æµÚ¶ş´Î·¢ËÍÊı¾İµÄ×Ö½ÚÊı·¢ËÍµÄ×Ö½ÚÊı 
-						//Ò»°ãstep8·¢ºÚÉ«Í¼Ïñ£¬step13·¢ºìÉ«Í¼Ïñ
+						//step1[2] ä¿å­˜å¢¨æ°´å±å‹å·
+						//step8[2] ä¿å­˜ä¸€æ¬¡å‘é€çš„å­—èŠ‚æ•°
+						//step13[2]  ä¿å­˜ç¬¬äºŒæ¬¡å‘é€æ•°æ®çš„å­—èŠ‚æ•°å‘é€çš„å­—èŠ‚æ•° 
+						//ä¸€èˆ¬step8å‘é»‘è‰²å›¾åƒï¼Œstep13å‘çº¢è‰²å›¾åƒ
 						if(size_flag==0)					//2.13inch
 						{
 							step1[2]=EPD_2IN13V2;
@@ -771,18 +772,18 @@ uint8_t Start_Dawring(void)
 						{
 							step1[2]=EPD_2IN7;
 							step8[2]=121;
-							//µÚÒ»´Î·¢ËÍ¿Õ°×Êı¾İ£¬·¢ÆäËûÊı¾İµ×²ã²»´¦ÀíÖ±½ÓÈ«²¿±ä³É0xff
+							//ç¬¬ä¸€æ¬¡å‘é€ç©ºç™½æ•°æ®ï¼Œå‘å…¶ä»–æ•°æ®åº•å±‚ä¸å¤„ç†ç›´æ¥å…¨éƒ¨å˜æˆ0xff
 							step13[2] = 121;
-							//·¢ËÍµÚ¶ş´ÎÊı¾İ£¬²ÅÊÇÕæµÄÍ¼ÏñÊı¾İ£¬Èç¹û²»·¢Ç°ÃæµÄ0xff,×îºóÃæÊä³öµÄÍ¼Ïñ²»Õı³£µÄÆ«ºÚ
+							//å‘é€ç¬¬äºŒæ¬¡æ•°æ®ï¼Œæ‰æ˜¯çœŸçš„å›¾åƒæ•°æ®ï¼Œå¦‚æœä¸å‘å‰é¢çš„0xff,æœ€åé¢è¾“å‡ºçš„å›¾åƒä¸æ­£å¸¸çš„åé»‘
 						}else if(size_flag==5)			//2.13inch B
 						{
-							step1[2]=EPD_2IN13BC;   //Ä«Ë®ÆÁ±àÂë EPD_2IN13BC Îª 5 
-							step8[2]=106; //Ò»´Î·¢ËÍµÄ×Ö½Ú³¤¶È
+							step1[2]=EPD_2IN13BC;   //å¢¨æ°´å±ç¼–ç  EPD_2IN13BC ä¸º 5 
+							step8[2]=106; //ä¸€æ¬¡å‘é€çš„å­—èŠ‚é•¿åº¦
 							step13[2] = 106;
 						}else if(size_flag==7)		
 						{
 							step1[2]=EPD_7IN5HD;   
-							step8[2]=120; //Ò»´Î·¢ËÍµÄ×Ö½Ú³¤¶È
+							step8[2]=120; //ä¸€æ¬¡å‘é€çš„å­—èŠ‚é•¿åº¦
 							step13[2] = 0;
 						}
 						
@@ -871,21 +872,21 @@ uint8_t Start_Dawring(void)
 					rfalTransceiveBlockingTxRx(step4,2,rx,20,actrxlen,RFAL_TXRX_FLAGS_DEFAULT,2157+2048);    //cd 03
 					if(size_flag ==6){
 						/*******************************************************************
-																	1.54B Ô¿³×¿Û³ÌĞò
+																	1.54B é’¥åŒ™æ‰£ç¨‹åº
 						*******************************************************************/
 						printf("Start_Dawring_1in54B\r\n");
 						char t= Start_Dawring_1in54B();
 							if(t == 0){
 								step=11;
-								//1.54B Êı¾İ´«ÊäÍê±ÏµÈ´ıË¢ĞÂ
+								//1.54B æ•°æ®ä¼ è¾“å®Œæ¯•ç­‰å¾…åˆ·æ–°
 							}else if(t == 1){
 								step=14;
-								//1.54B Êı¾İ´«Êä´íÎó
+								//1.54B æ•°æ®ä¼ è¾“é”™è¯¯
 							}else if(t ==2){
 								step = 15;
 							}
 						/*******************************************************************
-																	1.54B Ô¿³×¿Û³ÌĞò END
+																	1.54B é’¥åŒ™æ‰£ç¨‹åº END
 						*******************************************************************/
 						}
 					if(rx[0]==0 && rx[1]==0){
@@ -1117,7 +1118,7 @@ uint8_t Start_Dawring(void)
 				{		
 					if(size_flag==0 || size_flag==1 || size_flag==2 || size_flag==3 || size_flag ==7){
 						rfalTransceiveBlockingTxRx(step9,2,rx,20,actrxlen,RFAL_TXRX_FLAGS_DEFAULT,2157+2048);//cd 18
-						//ºÚ°×ÆÁ·¢ËÍµ×°åÄÇ±ßÒ²ÆÁ±ÎÁË£¬ÎŞĞ§¹û¡£   2.7³ıÍâ
+						//é»‘ç™½å±å‘é€åº•æ¿é‚£è¾¹ä¹Ÿå±è”½äº†ï¼Œæ— æ•ˆæœã€‚   2.7é™¤å¤–
 						if(rx[0]!=0||rx[1]!=0)
 						{
 								fail_num++;
@@ -1147,7 +1148,7 @@ uint8_t Start_Dawring(void)
 				}
 				else if(step==10)
 				{
-						rfalTransceiveBlockingTxRx(step10,2,rx,20,actrxlen,RFAL_TXRX_FLAGS_DEFAULT,2157+2048);//cd 09 Ë¢ĞÂÖ¸Áî
+						rfalTransceiveBlockingTxRx(step10,2,rx,20,actrxlen,RFAL_TXRX_FLAGS_DEFAULT,2157+2048);//cd 09 åˆ·æ–°æŒ‡ä»¤
 						if(rx[0]!=0||rx[1]!=0)
 							{
 								fail_num++;
@@ -1170,7 +1171,7 @@ uint8_t Start_Dawring(void)
 				}
 				else if(step==11)
 				{		
-						if(size_flag == 5 || size_flag == 6){//ºÚ°×ºìÆÁÄ»Ë¢ĞÂÊ±¼ä±È½Ï³¤ÏÈµÈ´ı
+						if(size_flag == 5 || size_flag == 6){//é»‘ç™½çº¢å±å¹•åˆ·æ–°æ—¶é—´æ¯”è¾ƒé•¿å…ˆç­‰å¾…
 								DEV_Delay_ms(10000);
 						}else if(size_flag == 7){
 							DEV_Delay_ms(1000);
@@ -1179,7 +1180,7 @@ uint8_t Start_Dawring(void)
 						{	rx[0]=1;rx[1]=1;
 							if(size_flag == 6){
 								rfalTransceiveBlockingTxRx(step8,2,rx,20,actrxlen,RFAL_TXRX_FLAGS_DEFAULT,2157+2048);
-								//1.54B·¢ËÍ0xcd 0x08
+								//1.54Bå‘é€0xcd 0x08
 							}else{
 								rfalTransceiveBlockingTxRx(step11,2,rx,20,actrxlen,RFAL_TXRX_FLAGS_DEFAULT,2157+2048);										//cd 0a
 							}
@@ -1277,7 +1278,7 @@ uint8_t Start_Dawring(void)
 							progress=i*50/48+50;
 							printf("Proress: %d %%\r\n", progress);
 							Show_Progress(progress);
-							GREEN_LED_Turn();//ÂÌµÆÉÁË¸
+							GREEN_LED_Turn();//ç»¿ç¯é—ªçƒ
 						}
 					}else if(size_flag==5){
 						for(i=0;i<26;i++){	
@@ -1288,7 +1289,7 @@ uint8_t Start_Dawring(void)
 							progress=i*50/26+50;
 							printf("Proress: %d %%\r\n", progress);
 							Show_Progress(progress);
-							GREEN_LED_Turn();//ÂÌµÆÉÁË¸
+							GREEN_LED_Turn();//ç»¿ç¯é—ªçƒ
 						}
 					}
 					rx[0]=1;rx[1]=1;
@@ -1306,3 +1307,5 @@ uint8_t Start_Dawring(void)
 	//printf("END\r\n");
 	return 0;
 }
+
+const int ePaper_Quantity = EPAPER_QUANTITY;
