@@ -91,6 +91,7 @@ void Error_Handler(void);
 #define OLED_RES_GPIO_Port GPIOC
 #define OLED_DC_Pin GPIO_PIN_9
 #define OLED_DC_GPIO_Port GPIOC
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
@@ -100,5 +101,3 @@ void Error_Handler(void);
 #endif
 
 #endif /* __MAIN_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

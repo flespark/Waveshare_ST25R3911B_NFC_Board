@@ -226,10 +226,10 @@ void demoCycle( void )
       break;
 
     case DEMO_ST_POLL_PASSIV_TECH:
-      found |= demoPollNFCA();
-      found |= demoPollNFCB();
-      found |= demoPollST25TB();
-      found |= demoPollNFCF();
+      // found |= demoPollNFCA();
+      // found |= demoPollNFCB();
+      // found |= demoPollST25TB();
+      // found |= demoPollNFCF();
       found |= demoPollNFCV();
     
       platformDelay(300);
@@ -613,6 +613,8 @@ bool demoPollNFCV( void )
     
     found = true;
     printf("ISO15693/NFC-V card found. UID: %s\r\n", hex2Str(nfcvDev.InvRes.UID, RFAL_NFCV_UID_LEN));    
+    
+    
   }
 
   return found;
