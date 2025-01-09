@@ -54,7 +54,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+uint8_t globalCommProtectCnt = 0;   /*!< Global Protection counter     */
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -208,6 +208,7 @@ int main(void)
   MX_GPIO_Init();
 #if defined(LOG_USING_UART)
   MX_USART2_UART_Init();
+  logUsartInit(&huart2);
 #elif defined(LOG_USING_RTT)
   SEGGER_RTT_Init();
 #endif
@@ -217,7 +218,7 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-	SpiInit(&hspi1);
+	spiInit(&hspi1);
 	/* Initalize RFAL */
   rfalAnalogConfigInitialize();	
 	/* Initalize OLED */

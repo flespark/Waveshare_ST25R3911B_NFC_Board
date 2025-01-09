@@ -285,7 +285,7 @@ bool demoPollAP2P( void )
     /* Initialize RFAL as AP2P Initiator NFC BR 424 */
     err = rfalSetMode(RFAL_MODE_POLL_ACTIVE_P2P, ((try106) ? RFAL_BR_106 : RFAL_BR_424), ((try106) ? RFAL_BR_106 : RFAL_BR_424));
 
-    rfalSetErrorHandling(RFAL_ERRORHANDLING_NFC);
+    rfalSetErrorHandling(RFAL_ERRORHANDLING_EMD);
     rfalSetFDTListen(RFAL_FDT_LISTEN_AP2P_POLLER);
     rfalSetFDTPoll(RFAL_TIMING_NONE);
     
@@ -603,7 +603,7 @@ bool demoPollNFCV( void )
   rfalNfcvPollerInitialize();           /* Initialize for NFC-F */
   rfalFieldOnAndStartGT();              /* Turns the Field On if not already and start GT timer */
 
-  err = rfalNfcvPollerCollisionResolution(1, &nfcvDev, &devCnt);
+  err = rfalNfcvPollerCollisionResolution(RFAL_COMPLIANCE_MODE_NFC, 1, &nfcvDev, &devCnt);
   if( (err == ERR_NONE) && (devCnt > 0) )
   {
     /******************************************************/

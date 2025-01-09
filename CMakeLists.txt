@@ -68,7 +68,8 @@ endif()
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
-add_subdirectory(Middlewares/ST/rfal)
+add_subdirectory(Middlewares/ST/RFAL)
+add_subdirectory(Middlewares/ST/st25r_common)
 add_subdirectory(Middlewares/Third_Party/SEGGER_RTT)
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
@@ -79,14 +80,13 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     ${CMAKE_CURRENT_SOURCE_DIR}/Src/demo.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Src/logger.c
     ${CMAKE_CURRENT_SOURCE_DIR}/User/Browser/Browser.c
     ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/GUI_Paint.c
     ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/SPI_RAM.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/ST25R3911/st25r3911.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/ST25R3911/st25r3911_com.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/ST25R3911/st25r3911_interrupt.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/ST25R3911/timer.c
+    # ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/ST25R3911/st25r3911.c
+    # ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/ST25R3911/st25r3911_com.c
+    # ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/ST25R3911/st25r3911_interrupt.c
+    # ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/ST25R3911/timer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/User/Config/DEV_Config.c
     ${CMAKE_CURRENT_SOURCE_DIR}/User/Fonts/Fonts.c
     ${CMAKE_CURRENT_SOURCE_DIR}/User/Key/Key.c
@@ -101,7 +101,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     ${CMAKE_CURRENT_SOURCE_DIR}/User/Browser
     ${CMAKE_CURRENT_SOURCE_DIR}/User/Bsp
-    ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/ST25R3911
+    # ${CMAKE_CURRENT_SOURCE_DIR}/User/BSP/ST25R3911
     ${CMAKE_CURRENT_SOURCE_DIR}/User/Config
     ${CMAKE_CURRENT_SOURCE_DIR}/User/Fonts
     ${CMAKE_CURRENT_SOURCE_DIR}/User/Key
@@ -119,7 +119,8 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
 
     # Add user defined libraries
-    rfal_driver
+    RFAL
+    st25r_common
     SEGGER_RTT
 )
 

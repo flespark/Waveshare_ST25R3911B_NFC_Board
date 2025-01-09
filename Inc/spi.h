@@ -29,8 +29,7 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-void SpiInit(SPI_HandleTypeDef *hspi);
-uint8_t SpiTxRx(const uint8_t *txData, uint8_t *rxData, uint8_t length);
+
 /* USER CODE END Includes */
 
 extern SPI_HandleTypeDef hspi1;

@@ -44,26 +44,26 @@ uint8_t SDCard_Init(void)
     if(FATFS_LinkDriver(&USER_Driver, USERPath) == 0) {
         /* 1.Initialize the SD mounted */
         if(BSP_SD_Init() != MSD_OK) {
-            DEBUG("SD card initialization failed, check if SD card is inserted.\r\n");
+            DEBUG_PRINTF("SD card initialization failed, check if SD card is inserted.\r\n");
             return 0;
         } else {
-            DEBUG("SD card initialization successful..\r\n");
+            DEBUG_PRINTF("SD card initialization successful..\r\n");
         }
 
         /* 2.Check the mounted device */
         f_res = f_mount(&USERFatFS, (TCHAR const*)"/", 1);
         if(f_res != FR_OK) {
-            DEBUG("SD card mount file system failed ,error code :(%d)\r\n",f_res);
+            DEBUG_PRINTF("SD card mount file system failed ,error code :(%d)\r\n",f_res);
             return 0;
         } else {
-            DEBUG("SD card mount file system success!! \r\n");
+            DEBUG_PRINTF("SD card mount file system success!! \r\n");
             /* Initialize the Directory Files pointers (heap) */
 //            for (counter = 0; counter < MAX_BMP_FILES; counter++) {
 //                pDirectoryFiles[counter] = malloc(11);
 //            }
         }
     } else {
-        DEBUG("FATFS_LinkDriver error\r\n");
+        DEBUG_PRINTF("FATFS_LinkDriver error\r\n");
 					return 0;
     }
 
@@ -72,15 +72,15 @@ uint8_t SDCard_Init(void)
     if((f_res != FR_OK)) {
         if(f_res == FR_NO_FILESYSTEM) {
             /* Display message: SD card not FAT formated */
-            DEBUG("SD card not FAT formated\r\n");
+            DEBUG_PRINTF("SD card not FAT formated\r\n");
         } else {
             /* Display message: Fail to open directory */
-            DEBUG("Fail to open directory\r\n");
+            DEBUG_PRINTF("Fail to open directory\r\n");
         }
-        DEBUG("SD card mount file system failed ,error code :(%d)\r\n",f_res);
+        DEBUG_PRINTF("SD card mount file system failed ,error code :(%d)\r\n",f_res);
         return 0;
     } else {
-        DEBUG("file open \r\n");
+        DEBUG_PRINTF("file open \r\n");
     }
 		
 		
@@ -107,9 +107,9 @@ int Picture_Bit_Depth(const char *BmpName)
 		HAL_Delay(10);
 		
 		if( f_open(&bmpfile, BmpName, FA_READ) == FR_OK) {
-				DEBUG("open bmp file: %s\r\n", BmpName);
+				DEBUG_PRINTF("open bmp file: %s\r\n", BmpName);
 		} else {
-			DEBUG("No file found: %s  \r\n", BmpName);
+			DEBUG_PRINTF("No file found: %s  \r\n", BmpName);
 			return -1;
 		}
 		
@@ -122,7 +122,7 @@ int Picture_Bit_Depth(const char *BmpName)
 		return pbmpheader->bpp;
 }
 
-//±£Ö¤Ò»´ÎÖ»´ò¿ªÒ»¸öÎÄ¼þ£¬²»È»ÄÚ´æ±¨´í£¬RGBÍ¼Æ¬ÐèÒªÄÚ´æÌ«¶àÁË
+//ï¿½ï¿½Ö¤Ò»ï¿½ï¿½Ö»ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½È»ï¿½Ú´æ±¨ï¿½ï¿½ï¿½ï¿½RGBÍ¼Æ¬ï¿½ï¿½Òªï¿½Ú´ï¿½Ì«ï¿½ï¿½ï¿½ï¿½
 void SDCard_ReadBMP(const char *BmpName)
 {
 		int Depth;
@@ -148,29 +148,29 @@ void SDCard_ReadBMP_Bitmap(const char *BmpName, UWORD Xstart, UWORD Ystart)
 		uint8_t color_flag=0;
     /* 1.Open file read file header */
     if(f_open(&bmpfile, BmpName, FA_READ) == FR_OK) {
-        DEBUG("open bmp file: %s\r\n", BmpName);
+        DEBUG_PRINTF("open bmp file: %s\r\n", BmpName);
     } else {
-				DEBUG("SDCard_ReadBMP_Bitmap\r\n");
-        DEBUG("No file found: %s\r\n", BmpName);
+				DEBUG_PRINTF("SDCard_ReadBMP_Bitmap\r\n");
+        DEBUG_PRINTF("No file found: %s\r\n", BmpName);
         return;
     }
     f_read(&bmpfile, BMP_Headinfo, sizeof(BMP_HEADER), &BytesRead);
 		printf("colorsused = %d\r\n",pbmpheader->colorsused);
-		//Èç¹û²»ÊÇÎ»Í¼
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»Í¼
 		if(pbmpheader->bpp != 1){
 			f_close(&bmpfile);
 			return;
 		}
 		
     if(pbmpheader->B == 0x4D && pbmpheader->M == 0x42) { //0x4d42
-        DEBUG("the file is not bmp\r\n");
+        DEBUG_PRINTF("the file is not bmp\r\n");
 				f_close(&bmpfile);
         return;
     }
 		
 		
-    DEBUG("file size =  %d \r\n", pbmpheader->fsize);
-    DEBUG("file offset =  %d \r\n", pbmpheader->offset);
+    DEBUG_PRINTF("file size =  %d \r\n", pbmpheader->fsize);
+    DEBUG_PRINTF("file offset =  %d \r\n", pbmpheader->offset);
 		
 		color_flag=pbmpheader->Color_1;
     /* 2.Get BMP file data pointer */
@@ -209,7 +209,7 @@ void SDCard_ReadBMP_Bitmap(const char *BmpName, UWORD Xstart, UWORD Ystart)
 				GREEN_LED_Turn();
 				if(KEY_BACK_Value == 1){
 					LED_GREEN_0;
-					printf("´ò¶Ï¶ÁÍ¼\r\n");
+					printf("ï¿½ï¿½Ï¶ï¿½Í¼\r\n");
 					break;
 				}
     }
@@ -233,27 +233,27 @@ void SDCard_ReadBMP_RGB(const char *BmpName)
     BMP_HEADER* pbmpheader = (BMP_HEADER*)BMP_Headinfo;
     /* 1.Open file read file header */
     if(f_open(&bmpfile, BmpName, FA_READ) == FR_OK) {
-        DEBUG("open bmp file: %s\r\n", BmpName);
+        DEBUG_PRINTF("open bmp file: %s\r\n", BmpName);
     } else {
-        DEBUG("No file found: %s\r\n", BmpName);
+        DEBUG_PRINTF("No file found: %s\r\n", BmpName);
         return;
     }
     f_read(&bmpfile, BMP_Headinfo, sizeof(BMP_HEADER), &BytesRead);
 		printf("colorsused = %d\r\n",pbmpheader->colorsused);
 		printf("bpp = %d\r\n",pbmpheader->bpp);
 		
-		//Èç¹û²»ÊÇÈ«²Ê
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½
 		if(pbmpheader->bpp != 24){
 			f_close(&bmpfile);
 			return;
 		}
     if(pbmpheader->B == 0x4D && pbmpheader->M == 0x42) { //0x4d42
-        DEBUG("the file is not bmp\r\n");
+        DEBUG_PRINTF("the file is not bmp\r\n");
 				f_close(&bmpfile);
         return;
     }
-    DEBUG("file size =  %d \r\n", pbmpheader->fsize);
-    DEBUG("file offset =  %d \r\n", pbmpheader->offset);
+    DEBUG_PRINTF("file size =  %d \r\n", pbmpheader->fsize);
+    DEBUG_PRINTF("file offset =  %d \r\n", pbmpheader->offset);
 		
     /* 2.Get BMP file data pointer */
     f_lseek(&bmpfile, pbmpheader->offset);
@@ -284,8 +284,8 @@ void SDCard_ReadBMP_RGB(const char *BmpName)
 						if(count>=8){
 							SPIRAM_WR_Byte(X/8 + (pbmpheader->BMP_Height - Y - 1) * Image_Width_Byte, ~Black_data);
 						
-							//ºìÉ«Í¼Æ¬Æ«ÒÆ60K×Ö½Ú 
-							//Ä¿Ç°×î´óµÄÏñËØµã880*528 Ö»ÐèÒª58.08K×Ö½Ú
+							//ï¿½ï¿½É«Í¼Æ¬Æ«ï¿½ï¿½60Kï¿½Ö½ï¿½ 
+							//Ä¿Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½880*528 Ö»ï¿½ï¿½Òª58.08Kï¿½Ö½ï¿½
 							SPIRAM_WR_Byte(X/8 + (pbmpheader->BMP_Height - Y - 1) * Image_Width_Byte+ 60000, ~Red_data);
 							count =0;
 							Black_data = 0;
@@ -296,7 +296,7 @@ void SDCard_ReadBMP_RGB(const char *BmpName)
         }
 				 if(KEY_BACK_Value == 1){
 					LED_GREEN_0;
-					 printf("´ò¶Ï¶ÁÍ¼\r\n");
+					 printf("ï¿½ï¿½Ï¶ï¿½Í¼\r\n");
 					break;
 				}
 				GREEN_LED_Turn();

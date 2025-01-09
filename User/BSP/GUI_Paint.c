@@ -122,10 +122,10 @@ void Paint_SetMirroring(UBYTE mirror)
 {
     if(mirror == MIRROR_NONE || mirror == MIRROR_HORIZONTAL || 
         mirror == MIRROR_VERTICAL || mirror == MIRROR_ORIGIN) {
-        DEBUG("mirror image x:%s, y:%s\r\n",(mirror & 0x01)? "mirror":"none", ((mirror >> 1) & 0x01)? "mirror":"none");
+        DEBUG_PRINTF("mirror image x:%s, y:%s\r\n",(mirror & 0x01)? "mirror":"none", ((mirror >> 1) & 0x01)? "mirror":"none");
         Paint_Image.Mirror = mirror;
     } else {
-        DEBUG("mirror should be MIRROR_NONE, MIRROR_HORIZONTAL, \
+        DEBUG_PRINTF("mirror should be MIRROR_NONE, MIRROR_HORIZONTAL, \
         MIRROR_VERTICAL or MIRROR_ORIGIN\r\n");
     }    
 }
@@ -215,7 +215,7 @@ void Paint_DrawPoint(UWORD Xpoint, UWORD Ypoint, UWORD Color,
                      DOT_PIXEL Dot_Pixel, DOT_STYLE DOT_STYLE)
 {
     if (Xpoint > Paint_Image.Image_Width || Ypoint > Paint_Image.Image_Height) {
-        DEBUG("Paint_DrawPoint Input exceeds the normal display range\r\n");
+        DEBUG_PRINTF("Paint_DrawPoint Input exceeds the normal display range\r\n");
         return;
     }
 
@@ -249,7 +249,7 @@ void Paint_DrawLine(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend,
 {
     if (Xstart > Paint_Image.Image_Width || Ystart > Paint_Image.Image_Height ||
         Xend > Paint_Image.Image_Width || Yend > Paint_Image.Image_Height) {
-        DEBUG("Paint_DrawLine Input exceeds the normal display range\r\n");
+        DEBUG_PRINTF("Paint_DrawLine Input exceeds the normal display range\r\n");
         return;
     }
 
@@ -275,7 +275,7 @@ void Paint_DrawLine(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend,
         Dotted_Len++;
         //Painted dotted line, 2 point is really virtual
         if (Line_Style == LINE_STYLE_DOTTED && Dotted_Len % 3 == 0) {
-            //DEBUG("LINE_DOTTED\r\n");
+            //DEBUG_PRINTF("LINE_DOTTED\r\n");
             Paint_DrawPoint(Xpoint, Ypoint, IMAGE_BACKGROUND, Dot_Pixel, DOT_STYLE_DFT);
             Dotted_Len = 0;
         } else {
@@ -311,7 +311,7 @@ void Paint_DrawRectangle(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend,
 {
     if (Xstart > Paint_Image.Image_Width || Ystart > Paint_Image.Image_Height ||
         Xend > Paint_Image.Image_Width || Yend > Paint_Image.Image_Height) {
-        DEBUG("Input exceeds the normal display range\r\n");
+        DEBUG_PRINTF("Input exceeds the normal display range\r\n");
         return;
     }
 
@@ -347,7 +347,7 @@ void Paint_DrawCircle(UWORD X_Center, UWORD Y_Center, UWORD Radius,
                       UWORD Color, DRAW_FILL  Draw_Fill , DOT_PIXEL Dot_Pixel)
 {
     if (X_Center > Paint_Image.Image_Width || Y_Center >= Paint_Image.Image_Height) {
-        DEBUG("Paint_DrawCircle Input exceeds the normal display range\r\n");
+        DEBUG_PRINTF("Paint_DrawCircle Input exceeds the normal display range\r\n");
         return;
     }
 
@@ -418,7 +418,7 @@ void Paint_DrawCircle(UWORD X_Center, UWORD Y_Center, UWORD Radius,
 //    UWORD Page, Column;
 
 //    if (Xpoint > Paint_Image.Image_Width || Ypoint > Paint_Image.Image_Height) {
-//        DEBUG("Paint_DrawChar Input exceeds the normal display range\r\n");
+//        DEBUG_PRINTF("Paint_DrawChar Input exceeds the normal display range\r\n");
 //        return;
 //    }
 
@@ -465,7 +465,7 @@ void Paint_DrawCircle(UWORD X_Center, UWORD Y_Center, UWORD Radius,
 //    UWORD Ypoint = Ystart;
 
 //    if (Xstart > Paint_Image.Image_Width || Ystart > Paint_Image.Image_Height) {
-//        DEBUG("Paint_DrawString_EN Input exceeds the normal display range\r\n");
+//        DEBUG_PRINTF("Paint_DrawString_EN Input exceeds the normal display range\r\n");
 //        return;
 //    }
 
@@ -511,7 +511,7 @@ void Paint_DrawCircle(UWORD X_Center, UWORD Y_Center, UWORD Radius,
 //    uint8_t *pStr = Str_Array;
 
 //    if (Xpoint > Paint_Image.Image_Width || Ypoint > Paint_Image.Image_Height) {
-//        DEBUG("Paint_DisNum Input exceeds the normal display range\r\n");
+//        DEBUG_PRINTF("Paint_DisNum Input exceeds the normal display range\r\n");
 //        return;
 //    }
 
