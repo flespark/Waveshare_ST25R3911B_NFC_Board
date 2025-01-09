@@ -59,8 +59,8 @@
 
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
-extern char KEY_BACK_Value; //SD_Card_APP.c 
 /* USER CODE BEGIN EV */
+extern char KEY_BACK_Value; //SD_Card_APP.c 
 
 /* USER CODE END EV */
 

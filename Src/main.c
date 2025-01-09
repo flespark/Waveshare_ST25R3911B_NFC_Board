@@ -105,6 +105,77 @@ int GetCompileDateTime(void)
 			 printf ("iMonth = %d\r\n",(iMonth/10)*16+iMonth%10);
        return iMonth;
 }
+
+#ifdef __GNUC__
+/* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
+   set to 'Yes') calls __io_putchar() */
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#define GETCHAR_PROTOTYPE int __io_getchar(void)
+#else
+#define PUTCHAR_PROTOTYPE int stout_putchar(int char)
+#define GETCHAR_PROTOTYPE int stdin_getchar(void)
+#endif /* __GNUC__ */
+/**
+  * @brief  Retargets the C library printf function to the USART.
+  * @param  None
+  * @retval None
+  */
+int __io_putchar(int ch)
+{
+#ifdef LOG_USING_UART
+    while (HAL_UART_GetState(&huart2) != HAL_UART_STATE_READY);
+    HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+    return (ch);
+#elif defined(LOG_USING_RTT)
+    SEGGER_RTT_PutCharSkipNoLock(0, ch);
+#endif
+
+}
+
+int __io_getchar(void)
+{
+    int ch;
+#ifdef LOG_USING_UART
+    while (HAL_UART_GetState(&huart2) != HAL_UART_STATE_READY);
+    HAL_UART_Receive(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+#elif defined(LOG_USING_RTT)
+    SEGGER_RTT_ReadNoLock(0, &ch, 1);
+#endif
+    return (ch);
+}
+
+/**
+  Put a character to the stdout
+
+  \param[in]   ch  Character to output
+  \return          The character written, or -1 on write error.
+*/
+int stdout_putchar (int ch) {
+#ifdef LOG_USING_UART
+    while (HAL_UART_GetState(&huart2) != HAL_UART_STATE_READY);
+    HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+    return (ch);
+#elif defined(LOG_USING_RTT)
+    SEGGER_RTT_PutCharSkipNoLock(0, ch);
+#endif
+}
+
+/**
+  Get a character from stdin
+
+  \return     The next character from the input, or -1 on read error.
+*/
+int stdin_getchar (void) {
+    int ch;
+#ifdef LOG_USING_UART
+    while (HAL_UART_GetState(&huart2) != HAL_UART_STATE_READY);
+    HAL_UART_Receive(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+#elif defined(LOG_USING_RTT)
+    SEGGER_RTT_ReadNoLock(0, &ch, 1);
+#endif
+    return (ch);
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -135,19 +206,23 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+#if defined(LOG_USING_UART)
   MX_USART2_UART_Init();
+#elif defined(LOG_USING_RTT)
+  SEGGER_RTT_Init();
+#endif
+	printf("started\n");
   MX_FATFS_Init();
   MX_SPI2_Init();
   MX_SPI1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 	SpiInit(&hspi1);
-	printf("Hello\r\n");
 	/* Initalize RFAL */
   rfalAnalogConfigInitialize();	
 	/* Initalize OLED */
 	ssd1306_init();	
-//	GetCompileDateTime();
+	// GetCompileDateTime();
 	/* Initalize SD Card */
 	while(1)
 	{
