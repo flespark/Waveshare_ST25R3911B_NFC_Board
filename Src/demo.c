@@ -226,10 +226,10 @@ void demoCycle( void )
       break;
 
     case DEMO_ST_POLL_PASSIV_TECH:
-      // found |= demoPollNFCA();
-      // found |= demoPollNFCB();
-      // found |= demoPollST25TB();
-      // found |= demoPollNFCF();
+      found |= demoPollNFCA();
+      found |= demoPollNFCB();
+      found |= demoPollST25TB();
+      found |= demoPollNFCF();
       found |= demoPollNFCV();
     
       platformDelay(300);

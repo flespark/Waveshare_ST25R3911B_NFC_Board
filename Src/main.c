@@ -264,9 +264,10 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while (1) {
-		/* Run RFAL Worker */
-			rfalWorker();
-      demoCycle();
+      /* Run RFAL Worker */
+      rfalWorker();
+      /* OLED Display*/
+      Browser_display();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
