@@ -1,6 +1,6 @@
 ### WaveShare ST25R3911B NFC Board DEMO
 
-基于VSCode的[微雪 ST25R3911B NFC Board](https://www.waveshare.net/wiki/ST25R3911B_NFC_Board)demo工程，RFAL更新到官方适配ST25R3911的最新版。使用cmake作为构建工具，gcc作为编译器，jlink作为烧录调试工具，clangd作为代码索引和lint工具, ccache用于加快编译速度。
+基于VSCode的[微雪 ST25R3911B NFC Board](https://www.waveshare.net/wiki/ST25R3911B_NFC_Board) 示例工程，RFAL更新到官方适配ST25R3911的最新版。使用cmake作为构建工具，gcc作为编译器，jlink作为烧录调试工具，clangd作为代码索引和lint工具, ccache用于加快编译速度。
 
 #### 如何使用
 
@@ -18,5 +18,5 @@ scoop install vscode cmake ninja gcc-arm-none-eabi clangd ccache
 
 #### 注意
 
-- 淘宝购买的发货版本可能将MCU替换为了AT23F413RC, 此工程仅适用于STM32F103RC版本。切换到STM32同时需要改动板子上的串口选择跳线（改为RXD<->RXD1, TXD<->TXD1）
+- 淘宝购买的发货版本可能将MCU替换为了AT23F413RB, 此工程仅适用于STM32F103RB版本。切换到STM32同时需要改动板子上的串口选择跳线（改为RXD<->RXD1, TXD<->TXD1）
 - Windows若报编译错误，执行cmake配置生成时指定编译器为Ninja
