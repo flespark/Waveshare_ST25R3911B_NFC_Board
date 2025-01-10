@@ -16,30 +16,27 @@
         // available icon: https://code.visualstudio.com/api/references/icons-in-labels
         // "defaultColor": "orange",
         "reloadButton": null,
-        "customVars": {
-            "jlink_sn": "99999999",
-        },
         "commands": [
             {
                 "name": "$(zap)Flash",
                 "singleInstance": true,
                 "focus": true,
                 "terminalName": "JLink Flash",
-                "command": "JLink -SelectEmuBySN ${jlink_sn} -CommanderScript ${workspaceFolder}/device/flash_mcu.jlink",
+                "command": "JLink -CommanderScript ${workspaceFolder}/device/flash_mcu.jlink",
             },
             {
                 "name": "$(debug-restart)Reset",
                 "singleInstance": true,
                 "focus": true,
                 "terminalName": "JLink Reset",
-                "command": "JLink -SelectEmuBySN ${jlink_sn} -CommanderScript ${workspaceFolder}/device/reset_mcu.jlink",
+                "command": "JLink --CommanderScript ${workspaceFolder}/device/reset_mcu.jlink",
             },
             {
                 "name": "$(trash)Erase",
                 "singleInstance": true,
                 "focus": true,
                 "terminalName": "JLink Erase",
-                "command": "JLink -SelectEmuBySN ${jlink_sn} -CommanderScript ${workspaceFolder}/device/erase_mcu.jlink",
+                "command": "JLink -CommanderScript ${workspaceFolder}/device/erase_mcu.jlink",
             }
         ]
     },

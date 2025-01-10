@@ -13,10 +13,8 @@
             "serverpath": "C:/Program Files/SEGGER/JLink/JLinkGDBServerCL.exe",
             "device": "STM32F103RC",
             "interface": "swd",
-            "serialNumber": "99999999",
             "svdPath": "${workspaceFolder}/device/STM32F103.svd",
-            /* Adapt to your gcc toolchain path */
-            "armToolchainPath": "C:/Users/08607/scoop/apps/gcc-arm-none-eabi/current/bin",
+            "armToolchainPath": "@TOOLCHAIN_FOLDER@",
             "runToEntryPoint": "main",
             "overrideResetCommands": ["monitor reset 0"],
             "liveWatch": {
@@ -39,10 +37,8 @@
             "serverpath": "C:/Program Files/SEGGER/JLink/JLinkGDBServerCL.exe",
             "device": "STM32F103RC",
             "interface": "swd",
-            "serialNumber": "99999999",
             "svdPath": "${workspaceFolder}/device/STM32F103.svd",
-            /* Adapt to your gcc toolchain path */
-            "armToolchainPath": "C:/Users/08607/scoop/apps/gcc-arm-none-eabi/current/bin",
+            "armToolchainPath": "@TOOLCHAIN_FOLDER@",
             "liveWatch": {
                 "enabled": true,
                 "samplesPerSecond": 1
