@@ -6,7 +6,7 @@
         {
             "name": "jlink debug",
             "cwd": "${workspaceFolder}",
-            "executable": "C:/Users/08607/Desktop/Source/ST25R3911B/epd-demo/build/Debug/epd-demo.elf",
+            "executable": "C:/Users/08607/Desktop/Source/ST25R3911B/epd-demo/build/RelWithDebInfo/epd-demo.elf",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "jlink",
@@ -30,7 +30,7 @@
         {
             "name": "jlink attach",
             "cwd": "${workspaceFolder}",
-            "executable": "C:/Users/08607/Desktop/Source/ST25R3911B/epd-demo/build/Debug/epd-demo.elf",
+            "executable": "C:/Users/08607/Desktop/Source/ST25R3911B/epd-demo/build/RelWithDebInfo/epd-demo.elf",
             "request": "attach",
             "type": "cortex-debug",
             "servertype": "jlink",

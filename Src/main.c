@@ -122,8 +122,8 @@ int GetCompileDateTime(void)
 int __io_putchar(int ch)
 {
 #ifdef LOG_USING_UART
-    while (HAL_UART_GetState(&huart2) != HAL_UART_STATE_READY);
-    HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+    while (HAL_UART_GetState(&huart1) != HAL_UART_STATE_READY);
+    HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
     return (ch);
 #elif defined(LOG_USING_RTT)
     SEGGER_RTT_PutCharSkipNoLock(0, ch);
@@ -135,8 +135,8 @@ int __io_getchar(void)
 {
     int ch;
 #ifdef LOG_USING_UART
-    while (HAL_UART_GetState(&huart2) != HAL_UART_STATE_READY);
-    HAL_UART_Receive(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+    while (HAL_UART_GetState(&huart1) != HAL_UART_STATE_READY);
+    HAL_UART_Receive(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
 #elif defined(LOG_USING_RTT)
     SEGGER_RTT_ReadNoLock(0, &ch, 1);
 #endif
@@ -151,8 +151,8 @@ int __io_getchar(void)
 */
 int stdout_putchar (int ch) {
 #ifdef LOG_USING_UART
-    while (HAL_UART_GetState(&huart2) != HAL_UART_STATE_READY);
-    HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+    while (HAL_UART_GetState(&huart1) != HAL_UART_STATE_READY);
+    HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
     return (ch);
 #elif defined(LOG_USING_RTT)
     SEGGER_RTT_PutCharSkipNoLock(0, ch);
@@ -167,8 +167,8 @@ int stdout_putchar (int ch) {
 int stdin_getchar (void) {
     int ch;
 #ifdef LOG_USING_UART
-    while (HAL_UART_GetState(&huart2) != HAL_UART_STATE_READY);
-    HAL_UART_Receive(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+    while (HAL_UART_GetState(&huart1) != HAL_UART_STATE_READY);
+    HAL_UART_Receive(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
 #elif defined(LOG_USING_RTT)
     SEGGER_RTT_ReadNoLock(0, &ch, 1);
 #endif
@@ -207,8 +207,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
 #if defined(LOG_USING_UART)
-  MX_USART2_UART_Init();
-  logUsartInit(&huart2);
+  MX_USART1_UART_Init();
+  logUsartInit(&huart1);
 #elif defined(LOG_USING_RTT)
   SEGGER_RTT_Init();
 #endif

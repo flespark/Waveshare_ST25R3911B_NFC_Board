@@ -1,7 +1,7 @@
 SelectInterface SWD
 Speed 4000
 Device STM32F103RC
-LoadFile C:/Users/08607/Desktop/Source/ST25R3911B/epd-demo/build/Debug/epd-demo.bin 0x8000000
+LoadFile C:/Users/08607/Desktop/Source/ST25R3911B/epd-demo/build/RelWithDebInfo/epd-demo.bin 0x8000000
 Reset
 Go
 Exit

@@ -18,5 +18,5 @@ scoop install vscode cmake ninja gcc-arm-none-eabi clangd ccache
 
 #### 注意
 
-- 淘宝购买的发货版本可能将MCU替换为了AT23F413RC, 此工程仅适用于STM32F103RC版本, 所以MCU需要换回来
+- 淘宝购买的发货版本可能将MCU替换为了AT23F413RC, 此工程仅适用于STM32F103RC版本。切换到STM32同时需要改动板子上的串口选择跳线（改为RXD<->RXD1, TXD<->TXD1）
 - Windows若报编译错误，执行cmake配置生成时指定编译器为Ninja

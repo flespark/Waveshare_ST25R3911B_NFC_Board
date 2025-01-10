@@ -52,16 +52,15 @@ elseif(${LOG_INTERFACE} STREQUAL uart)
     target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         LOG_USING_UART
     )
-elseif(${LOG_INTERFACE} STREQUAL uart_dma)
-    message(STATUS "Log interface use UART with DMA")
-    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
-        LOG_USING_UART_DMA
-    )
 elseif(${LOG_INTERFACE} STREQUAL rtt)
     message(STATUS "Log interface use RTT, NOTICE: RTT will wake MCU from low power")
     target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         LOG_USING_RTT
     )
+
+    add_subdirectory(Middlewares/Third_Party/SEGGER_RTT)
+    target_link_libraries(${CMAKE_PROJECT_NAME} SEGGER_RTT)
+
 else()
     message(FATAL_ERROR "Unsupported log interface selected...")
 endif()
@@ -70,7 +69,6 @@ endif()
 add_subdirectory(cmake/stm32cubemx)
 add_subdirectory(Middlewares/ST/RFAL)
 add_subdirectory(Middlewares/ST/st25r_common)
-add_subdirectory(Middlewares/Third_Party/SEGGER_RTT)
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined library search paths
@@ -116,7 +114,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     # Add user defined libraries
     RFAL
     st25r_common
-    SEGGER_RTT
 )
 
 generate_extra_output(${CMAKE_PROJECT_NAME})
